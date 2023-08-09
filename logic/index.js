@@ -36,6 +36,14 @@ function multiply(obj , index = 0){
     total *= nextValue;
     return total;
 }
+
+function divide(obj , index = 0){
+    let total = Number(obj[index].num);
+    let nextValue = Number(obj[index+1].num);
+    total /= nextValue;
+    return total;
+}
 console.log(add(numbers))
 console.log(subtract(numbers))
 console.log(multiply(numbers))
+console.log(divide(numbers))
