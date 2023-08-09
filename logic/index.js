@@ -1,7 +1,7 @@
 const numbers = [
-    {num:"1"},
-    {num:"2"},
-    {num:"3"}
+    {num:"10"},
+    {num:"20"},
+    {num:"30"}
 ]
 
 function countProperties(obj){
@@ -14,26 +14,28 @@ function countProperties(obj){
     return count;
 }
 
-console.log(countProperties(numbers))
+// console.log(countProperties(numbers))
 
-function add(obj){
-    let total = 0;
-    obj.map((number) => {
-        let nextValue = number.num;
-        total += Number(nextValue); 
-    });
+function add(obj , index =0){
+    let total = Number(obj[index].num);
+    let nextValue = Number(obj[index+1].num);
+    total += nextValue;
     return total;
 }
 
-function subtract(obj){
-    let total = obj[0].num;
-    obj.splice(0,1);
-    obj.map((number) => {
-        let nextValue = number.num;
-        total -= Number(nextValue); 
-    });
+function subtract(obj , index = 0){
+    let total = Number(obj[index].num);
+    let nextValue = Number(obj[index+1].num);
+    total -= nextValue;
     return total;
 }
 
+function multiply(obj , index = 0){
+    let total = Number(obj[index].num);
+    let nextValue = Number(obj[index+1].num);
+    total *= nextValue;
+    return total;
+}
 console.log(add(numbers))
 console.log(subtract(numbers))
+console.log(multiply(numbers))
