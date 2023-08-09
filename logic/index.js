@@ -25,4 +25,15 @@ function add(obj){
     return total;
 }
 
+function subtract(obj){
+    let total = obj[0].num;
+    obj.splice(0,1);
+    obj.map((number) => {
+        let nextValue = number.num;
+        total -= Number(nextValue); 
+    });
+    return total;
+}
+
 console.log(add(numbers))
+console.log(subtract(numbers))
