@@ -1,8 +1,23 @@
 const numbers = [
-    {num:"10"},
+    {num:"+"},
     {num:"20"},
     {num:"30"}
 ]
+let lastNumber = "";
+let operator = "";
+const operators =["+" ,"-" , "*" , "/"];
+
+[...document.querySelectorAll(".button")].forEach(el => el.addEventListener("click" ,() => {
+        if(Number(el.textContent)){
+            lastNumber += el.textContent; 
+            console.log(lastNumber)
+        }
+    }
+));
+
+
+
+const screen = document.getElementById("screen-section");
 
 function countProperties(obj){
     let count = 0;
@@ -14,7 +29,6 @@ function countProperties(obj){
     return count;
 }
 
-// console.log(countProperties(numbers))
 
 function add(obj , index =0){
     let total = Number(obj[index].num);
@@ -43,7 +57,3 @@ function divide(obj , index = 0){
     total /= nextValue;
     return total;
 }
-console.log(add(numbers))
-console.log(subtract(numbers))
-console.log(multiply(numbers))
-console.log(divide(numbers))
