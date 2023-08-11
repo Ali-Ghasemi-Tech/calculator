@@ -2,7 +2,7 @@ let numbers = [];
 
 let lastNumber = "";
 let operator = "";
-
+let lastObjectInList = numbers[numbers.length-1];
 const operators =["+" ,"-" , "X" , "/"];
 
 const back = document.getElementById('back');
@@ -29,6 +29,18 @@ const clear = document.getElementById('clear');
         // back button
         if(el.id === "back"){
             lastNumber = lastNumber.slice(0,-1);
+            if(lastNumber === "" && numbers.length !== 0){
+                let lastObjectKey = Object.keys(numbers)[numbers.length-1];
+                numbers[lastObjectKey]
+                console.log(numbers[lastObjectKey].opr|| numbers[lastObjectKey].num)
+                if(operators.includes(numbers[lastObjectKey].opr)){
+                    numbers.pop();
+                }else{
+                    lastNumber += numbers[lastObjectKey].num;
+                    lastNumber = lastNumber.slice(0 , -1);
+                    numbers.pop();
+                }
+            }
         }
         // clear button
         if(el.id === "clear"){
@@ -51,12 +63,12 @@ const clear = document.getElementById('clear');
             numbers.push({num:lastNumber});
             // after equation is done empty the array for next equation
             lastNumber = ""
-            numbers = [];
         }else if (el.id === "equal" && lastNumber === "" && numbers === []){
             console.log('enter a number')
-            if(numbers !== [] && numbers[numbers.length-1].hasOwnProperty('opr'))
+            if(numbers !== [] && lastObjectInList.hasOwnProperty('opr'))
             console.log("doing sth wrong");
         }
+
 
         console.log(lastNumber);
         console.table(numbers);
