@@ -1,4 +1,4 @@
-const numbers = [];
+let numbers = [];
 
 let lastNumber = "";
 let operator = "";
@@ -15,27 +15,45 @@ const clear = document.getElementById('clear');
 // save each button in a list so then you can use to calculate the equation  
 
 [...document.querySelectorAll(".button")].forEach(el => el.addEventListener("click" ,() => {
+        // print out numbers
         if(Number(el.textContent)){
             lastNumber += el.textContent; 
-            console.log(lastNumber)
         }
-        if(operators.includes(el.textContent)){
+        // add object to numbers list 
+        if(operators.includes(el.textContent) && lastNumber !== ""){
             numbers.push({num:lastNumber});
             lastNumber = "";
             numbers.push({opr:el.textContent});
         }
-        if(el.id === 'equal' && lastNumber !== ""){
-            numbers.push({num:lastNumber});
-            lastNumber = ""
-            // also run the equation function
-        }else if(lastNumber === ""){
-            console.log("the last part of equation is an operator ")
-        }
+        
+        // back button
         if(el.id === "back"){
             lastNumber = lastNumber.slice(0,-1);
-            console.log(lastNumber)
         }
+        // clear button
+        if(el.id === "clear"){
+            numbers = [];
+        }
+        // toggle button
+        if(el.id === "toggle" && lastNumber !== ""){
+            if(parseInt(lastNumber) <0){
+               let toggleNum = Math.abs(parseInt(lastNumber));
+               lastNumber = toggleNum.toString();
+            }else if(parseInt(lastNumber) > 0){
+                lastNumber = (-parseInt(lastNumber)).toString();
+            }
+        }
+        // equal button
+        if(el.id === 'equal' && lastNumber !== ""){
+            // equation function(needed)
+            numbers.push({num:lastNumber});
+            lastNumber = ""
+        }else if (el.id === "equal" && numbers[(numbers.length)-1].hasOwnProperty('opr') && lastNumber === ""){
+            console.log("doing sth wrong");
+        }
+
         console.table(numbers);
+        console.log(lastNumber);
     }
 ));
 
