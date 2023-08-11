@@ -44,16 +44,23 @@ const clear = document.getElementById('clear');
             }
         }
         // equal button
-        if(el.id === 'equal' && lastNumber !== ""){
+        if(el.id === 'equal' && lastNumber !== "" && numbers.some(()=>{
+            return numbers.map((obj)=> obj.opr);
+        }) && operators.includes(numbers[numbers.length-1].opr)){
             // equation function(needed)
             numbers.push({num:lastNumber});
+            // after equation is done empty the array for next equation
             lastNumber = ""
-        }else if (el.id === "equal" && numbers[(numbers.length)-1].hasOwnProperty('opr') && lastNumber === ""){
+            numbers = [];
+        }else if (el.id === "equal" && lastNumber === "" && numbers === []){
+            console.log('enter a number')
+            if(numbers !== [] && numbers[numbers.length-1].hasOwnProperty('opr'))
             console.log("doing sth wrong");
         }
 
-        console.table(numbers);
         console.log(lastNumber);
+        console.table(numbers);
+
     }
 ));
 
@@ -99,3 +106,5 @@ function divide(obj , index = 0){
     total /= nextValue;
     return total;
 }
+
+
