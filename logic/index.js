@@ -1,9 +1,8 @@
 let numbers = [];
 
 let lastNumber = "";
-let operator = "";
 let lastObjectInList = numbers[numbers.length-1];
-const operators =["+" ,"-" , "X" , "/"];
+const operators =['/' , 'X' , '+' ,'-'];
 
 const back = document.getElementById('back');
 const equal = document.getElementById('equal');
@@ -32,7 +31,6 @@ const clear = document.getElementById('clear');
             if(lastNumber === "" && numbers.length !== 0){
                 let lastObjectKey = Object.keys(numbers)[numbers.length-1];
                 numbers[lastObjectKey]
-                console.log(numbers[lastObjectKey].opr|| numbers[lastObjectKey].num)
                 if(operators.includes(numbers[lastObjectKey].opr)){
                     numbers.pop();
                 }else{
@@ -61,8 +59,11 @@ const clear = document.getElementById('clear');
         }) && operators.includes(numbers[numbers.length-1].opr)){
             // equation function(needed)
             numbers.push({num:lastNumber});
-            // after equation is done empty the array for next equation
+                const result = calculate(numbers);
+                console.log(result);
             lastNumber = ""
+            console.log(lastNumber);
+            console.table(numbers);
         }else if (el.id === "equal" && lastNumber === "" && numbers === []){
             console.log('enter a number')
             if(numbers !== [] && lastObjectInList.hasOwnProperty('opr'))
@@ -70,8 +71,7 @@ const clear = document.getElementById('clear');
         }
 
 
-        console.log(lastNumber);
-        console.table(numbers);
+        
 
     }
 ));
@@ -91,32 +91,83 @@ function countProperties(obj){
 }
 
 
-function add(obj , index =0){
-    let total = Number(obj[index].num);
+function add(obj , index){
+    let total = Number(obj[index-1].num);
     let nextValue = Number(obj[index+1].num);
     total += nextValue;
     return total;
 }
 
-function subtract(obj , index = 0){
-    let total = Number(obj[index].num);
+function subtract(obj , index){
+    let total = Number(obj[index-1].num);
     let nextValue = Number(obj[index+1].num);
     total -= nextValue;
     return total;
 }
 
-function multiply(obj , index = 0){
-    let total = Number(obj[index].num);
+function multiply(obj , index){
+    let total = Number(obj[index-1].num);
     let nextValue = Number(obj[index+1].num);
     total *= nextValue;
     return total;
 }
 
-function divide(obj , index = 0){
-    let total = Number(obj[index].num);
+function divide(obj , index){
+    let total = Number(obj[index-1].num);
     let nextValue = Number(obj[index+1].num);
     total /= nextValue;
     return total;
 }
-
-
+    // got help from chat gpt since i couldn't fix the operator order 
+function calculate(equationList){
+    
+        const precedence = {'+': 1, '-': 1, 'X': 2, '/': 2};
+        const outputQueue = [];
+        const operatorStack = [];
+    
+        for (const token of equationList) {
+            console.log(token)
+            if (token.num) {
+                outputQueue.push(parseFloat(token.num));
+            } else if (token.opr) {
+                const operator = token.opr;
+                console.log(operator)
+                while (
+                    operatorStack.length > 0 &&
+                    precedence[operatorStack[operatorStack.length - 1]] >= precedence[operator]
+                ) {
+                    outputQueue.push(operatorStack.pop());
+                    console.log(outputQueue);
+                    console.log(operatorStack)
+                }
+                operatorStack.push(operator);
+            }
+        }
+    
+        while (operatorStack.length > 0) {
+            outputQueue.push(operatorStack.pop());
+        }
+    
+        const resultStack = [];
+        for (const token of outputQueue) {
+            if (typeof token === 'number') {
+                resultStack.push(token);
+            } else {
+                const b = resultStack.pop();
+                const a = resultStack.pop();
+                if (token === '+') {
+                    resultStack.push(a + b);
+                } else if (token === '-') {
+                    resultStack.push(a - b);
+                } else if (token === 'X') {
+                    resultStack.push(a * b);
+                } else if (token === '/') {
+                    resultStack.push(a / b);
+                }
+            }
+        }
+    
+        return resultStack[0];
+    }
+    
+    
