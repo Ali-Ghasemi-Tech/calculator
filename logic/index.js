@@ -2,7 +2,7 @@ let numbers = [];
 
 let lastNumber = "";
 let lastObjectInList = numbers[numbers.length-1];
-const operators =['/' , '*' , '+' ,'-'];
+const operators =['/' , '*' , '+' ,'-' ];
 
 const back = document.getElementById('back');
 const equal = document.getElementById('equal');
@@ -65,13 +65,15 @@ const dontShow = ['C' , '+/-' , '', '='];
     }
     // toggle button
     if(el.id === "toggle" && lastNumber !== ""){
+        text = text.slice(0 , -lastNumber.length);
         if(parseFloat(lastNumber) < 0){
             let toggleNum = Math.abs(parseFloat(lastNumber));
             lastNumber = toggleNum.toString();
+            text = text + `(${lastNumber})`;
         }else if(parseFloat(lastNumber) > 0){
             lastNumber = (-parseFloat(lastNumber)).toString();
+            text = text + `(${lastNumber})`;
         }
-        text = lastNumber;
     }
     // equal button
     if(el.id === 'equal' && lastNumber !== "" && numbers.some(()=>{
@@ -125,7 +127,7 @@ function countProperties(obj){
 
     // i rewrote the function and learned it's fundamentals
 function calculate(equationList){
-        const precedence = {'+':1, '-':1 , '*':2 , '/':2};
+        const precedence = {'+':1, '-':1 , '*':2 , '/':2 , '%':2};
         const queueList =[];
         const stackList = [];
 
@@ -166,9 +168,11 @@ function calculate(equationList){
                 else if(token === '*'){
                     resultStack.push(a*b);
                 } 
+        
             }
         }
         return resultStack[0];
     }
+
     
     
