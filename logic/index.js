@@ -2,7 +2,7 @@ let numbers = [];
 
 let lastNumber = "";
 let lastObjectInList = numbers[numbers.length-1];
-const operators =['/' , '*' , '+' ,'-' ];
+const operators =['/' , '*' , '+' ,'-'];
 
 const back = document.getElementById('back');
 const equal = document.getElementById('equal');
@@ -20,14 +20,12 @@ const dontShow = ['C' , '+/-' , '', '='];
 
 [...document.querySelectorAll(".button")].forEach(el => el.addEventListener("click" ,() => {
     
-   
 
     // print out list
-    if(Number(el.textContent) || el.textContent === '.' ){
+    if(Number(el.textContent) || el.textContent === '.' || el.id === '0'){
         if(text.includes('.') && el.textContent === '.'){}
-        else{
+        else {
             lastNumber += el.textContent; 
-            console.log(lastNumber)
             text += el.textContent;
         }
         
@@ -100,8 +98,8 @@ const dontShow = ['C' , '+/-' , '', '='];
         console.log("doing sth wrong");
     }
 
-    screen.innerHTML = `<div id="screen-section" class="flex overflow-hidden flex-row items-center justify-end pr-5 w-[92%] h-[200px] bg-yellow-950 mt-4 rounded-xl">
-    <span class="font-sans text-6xl text-white"> ${text}</span>
+    screen.innerHTML = `<div id="screen-section" class="flex overflow-hidden flex-row items-center justify-end pr-5 w-[92%] h-[200px] bg-blue-300 mt-4 rounded-xl">
+    <span class="font-sans text-6xl text-black"> ${text}</span>
 </div>`
 
     console.log(typeof(text))

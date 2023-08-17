@@ -4,6 +4,6 @@
 
 @layer components{
     .button{
-        @apply  bg-gray-500 text-3xl text-gray-50 rounded-full
+        @apply  bg-blue-400 text-3xl text-black rounded-full
     }
 }
